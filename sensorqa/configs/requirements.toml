@@ -1,0 +1,830 @@
+# ================================================================
+# SensorQA Engineering Requirements
+# ================================================================
+#
+# This file defines qualification limits separately from analysis
+# algorithms.
+#
+# Analysis tools calculate engineering metrics.
+# This file defines whether those metrics satisfy a specific
+# qualification profile.
+#
+# IMPORTANT:
+# The numerical values below are EXAMPLE REQUIREMENTS intended to
+# demonstrate SensorQA functionality. They are not universal sensor
+# acceptance limits.
+#
+# SensorQA V1 uses strict unit matching in the requirements engine.
+# Requirement units should therefore match the units produced by
+# SensorQA analysis tools.
+# ================================================================
+
+
+[profile]
+name = "Example IMU Qualification Profile"
+version = "1.0.0"
+
+description = """
+Example qualification requirements for demonstrating SensorQA.
+Replace these limits with requirements appropriate to the actual
+sensor, application, test protocol, and product specification.
+"""
+
+sensor_type = "imu"
+
+example_profile = true
+
+
+# ================================================================
+# SAMPLING INTEGRITY
+# ================================================================
+
+[[requirements]]
+
+id = "sampling_rate_error"
+
+enabled = true
+
+tool_id = "imu_sampling_integrity"
+
+metric = "Sampling Rate Error"
+
+operator = "abs<="
+
+limit = 2.0
+
+unit = "%"
+
+description = """
+Absolute difference between measured and nominal sampling frequency
+shall not exceed 2 percent.
+"""
+
+
+[[requirements]]
+
+id = "capture_fraction"
+
+enabled = true
+
+tool_id = "imu_sampling_integrity"
+
+metric = "Estimated Capture Fraction"
+
+operator = ">="
+
+limit = 99.0
+
+unit = "%"
+
+description = """
+Estimated sample capture fraction shall be at least 99 percent.
+"""
+
+
+[[requirements]]
+
+id = "duplicate_timestamps"
+
+enabled = true
+
+tool_id = "imu_sampling_integrity"
+
+metric = "Duplicate Timestamp Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+No duplicate timestamp intervals are permitted.
+"""
+
+
+[[requirements]]
+
+id = "backward_timestamps"
+
+enabled = true
+
+tool_id = "imu_sampling_integrity"
+
+metric = "Backward Timestamp Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+Timestamp sequence shall not move backward in time.
+"""
+
+
+# ================================================================
+# GYROSCOPE ZERO-RATE BIAS
+# ================================================================
+
+[[requirements]]
+
+id = "gyro_bias_x"
+
+enabled = true
+
+tool_id = "imu_gyro_bias"
+
+metric = "GX Bias"
+
+operator = "abs<="
+
+limit = 0.005
+
+unit = "rad/s"
+
+description = """
+Absolute X-axis stationary gyroscope bias shall not exceed
+0.005 rad/s.
+"""
+
+
+[[requirements]]
+
+id = "gyro_bias_y"
+
+enabled = true
+
+tool_id = "imu_gyro_bias"
+
+metric = "GY Bias"
+
+operator = "abs<="
+
+limit = 0.005
+
+unit = "rad/s"
+
+description = """
+Absolute Y-axis stationary gyroscope bias shall not exceed
+0.005 rad/s.
+"""
+
+
+[[requirements]]
+
+id = "gyro_bias_z"
+
+enabled = true
+
+tool_id = "imu_gyro_bias"
+
+metric = "GZ Bias"
+
+operator = "abs<="
+
+limit = 0.005
+
+unit = "rad/s"
+
+description = """
+Absolute Z-axis stationary gyroscope bias shall not exceed
+0.005 rad/s.
+"""
+
+
+[[requirements]]
+
+id = "gyro_bias_vector"
+
+enabled = true
+
+tool_id = "imu_gyro_bias"
+
+metric = "Gyroscope Bias Vector Magnitude"
+
+operator = "<="
+
+limit = 0.008
+
+unit = "rad/s"
+
+description = """
+Magnitude of the three-axis stationary gyroscope bias vector
+shall not exceed 0.008 rad/s.
+"""
+
+
+# ================================================================
+# GYROSCOPE STATIONARY NOISE
+# ================================================================
+
+[[requirements]]
+
+id = "gyro_noise_x"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "GX Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.002
+
+unit = "rad/s"
+
+description = """
+X-axis stationary gyroscope noise standard deviation shall not
+exceed 0.002 rad/s.
+"""
+
+
+[[requirements]]
+
+id = "gyro_noise_y"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "GY Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.002
+
+unit = "rad/s"
+
+description = """
+Y-axis stationary gyroscope noise standard deviation shall not
+exceed 0.002 rad/s.
+"""
+
+
+[[requirements]]
+
+id = "gyro_noise_z"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "GZ Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.002
+
+unit = "rad/s"
+
+description = """
+Z-axis stationary gyroscope noise standard deviation shall not
+exceed 0.002 rad/s.
+"""
+
+
+# ================================================================
+# ACCELEROMETER STATIONARY NOISE
+# ================================================================
+
+[[requirements]]
+
+id = "accelerometer_noise_x"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "AX Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.05
+
+unit = "m/s^2"
+
+description = """
+X-axis stationary accelerometer noise standard deviation shall
+not exceed 0.05 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_noise_y"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "AY Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.05
+
+unit = "m/s^2"
+
+description = """
+Y-axis stationary accelerometer noise standard deviation shall
+not exceed 0.05 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_noise_z"
+
+enabled = true
+
+tool_id = "imu_stationary_noise"
+
+metric = "AZ Noise Standard Deviation"
+
+operator = "<="
+
+limit = 0.05
+
+unit = "m/s^2"
+
+description = """
+Z-axis stationary accelerometer noise standard deviation shall
+not exceed 0.05 m/s^2.
+"""
+
+
+# ================================================================
+# GRAVITY CONSISTENCY
+# ================================================================
+
+[[requirements]]
+
+id = "gravity_magnitude_mae"
+
+enabled = true
+
+tool_id = "imu_gravity_error"
+
+metric = "Gravity Magnitude MAE"
+
+operator = "<="
+
+limit = 0.10
+
+unit = "m/s^2"
+
+description = """
+Mean absolute static gravity-magnitude error shall not exceed
+0.10 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "gravity_magnitude_rmse"
+
+enabled = true
+
+tool_id = "imu_gravity_error"
+
+metric = "Gravity Magnitude RMSE"
+
+operator = "<="
+
+limit = 0.15
+
+unit = "m/s^2"
+
+description = """
+Static gravity-magnitude RMSE shall not exceed 0.15 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "gravity_max_error"
+
+enabled = true
+
+tool_id = "imu_gravity_error"
+
+metric = "Maximum Absolute Gravity Magnitude Error"
+
+operator = "<="
+
+limit = 0.30
+
+unit = "m/s^2"
+
+description = """
+Maximum observed absolute static gravity-magnitude error shall
+not exceed 0.30 m/s^2.
+"""
+
+
+# ================================================================
+# SIX-POSITION ACCELEROMETER CALIBRATION
+# ================================================================
+
+[[requirements]]
+
+id = "accelerometer_x_sensitivity_error"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AX Sensitivity Error Percent"
+
+operator = "between"
+
+lower_limit = -2.0
+
+upper_limit = 2.0
+
+unit = "%"
+
+description = """
+X-axis accelerometer sensitivity error shall remain between
+-2 percent and +2 percent before correction.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_y_sensitivity_error"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AY Sensitivity Error Percent"
+
+operator = "between"
+
+lower_limit = -2.0
+
+upper_limit = 2.0
+
+unit = "%"
+
+description = """
+Y-axis accelerometer sensitivity error shall remain between
+-2 percent and +2 percent before correction.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_z_sensitivity_error"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AZ Sensitivity Error Percent"
+
+operator = "between"
+
+lower_limit = -2.0
+
+upper_limit = 2.0
+
+unit = "%"
+
+description = """
+Z-axis accelerometer sensitivity error shall remain between
+-2 percent and +2 percent before correction.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_bias_x"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AX Bias"
+
+operator = "abs<="
+
+limit = 0.20
+
+unit = "m/s^2"
+
+description = """
+Absolute X-axis accelerometer bias estimated from six-position
+testing shall not exceed 0.20 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_bias_y"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AY Bias"
+
+operator = "abs<="
+
+limit = 0.20
+
+unit = "m/s^2"
+
+description = """
+Absolute Y-axis accelerometer bias estimated from six-position
+testing shall not exceed 0.20 m/s^2.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_bias_z"
+
+enabled = true
+
+tool_id = "imu_six_position_calibration"
+
+metric = "AZ Bias"
+
+operator = "abs<="
+
+limit = 0.20
+
+unit = "m/s^2"
+
+description = """
+Absolute Z-axis accelerometer bias estimated from six-position
+testing shall not exceed 0.20 m/s^2.
+"""
+
+
+# ================================================================
+# SATURATION / RANGE BEHAVIOR
+# ================================================================
+
+[[requirements]]
+
+id = "accelerometer_ax_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "AX Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+AX shall contain no samples coinciding with a configured
+accelerometer full-scale boundary.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_ay_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "AY Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+AY shall contain no samples coinciding with a configured
+accelerometer full-scale boundary.
+"""
+
+
+[[requirements]]
+
+id = "accelerometer_az_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "AZ Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+AZ shall contain no samples coinciding with a configured
+accelerometer full-scale boundary.
+"""
+
+
+[[requirements]]
+
+id = "gyroscope_gx_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "GX Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+GX shall contain no samples coinciding with a configured
+gyroscope full-scale boundary.
+"""
+
+
+[[requirements]]
+
+id = "gyroscope_gy_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "GY Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+GY shall contain no samples coinciding with a configured
+gyroscope full-scale boundary.
+"""
+
+
+[[requirements]]
+
+id = "gyroscope_gz_clipping"
+
+enabled = true
+
+tool_id = "imu_saturation"
+
+metric = "GZ Exact Limit Count"
+
+operator = "<="
+
+limit = 0
+
+description = """
+GZ shall contain no samples coinciding with a configured
+gyroscope full-scale boundary.
+"""
+
+
+# ================================================================
+# ALLAN-DEVIATION EXAMPLES
+# ================================================================
+#
+# These are disabled by default because Allan coefficients should
+# only be qualified when:
+#
+#   1. the test duration is appropriate,
+#   2. SensorQA actually identifies the required Allan region,
+#   3. the product has a documented stochastic-noise requirement.
+#
+# If an Allan coefficient is not produced, an enabled requirement
+# would correctly become NOT_EVALUATED.
+# ================================================================
+
+
+[[requirements]]
+
+id = "gx_angle_random_walk"
+
+enabled = false
+
+tool_id = "imu_allan_deviation"
+
+metric = "GX Angle Random Walk Coefficient"
+
+operator = "<="
+
+limit = 0.001
+
+unit = "rad/sqrt(s)"
+
+description = """
+Example only. X-axis angle random walk coefficient shall not exceed
+0.001 rad/sqrt(s).
+"""
+
+
+[[requirements]]
+
+id = "gy_angle_random_walk"
+
+enabled = false
+
+tool_id = "imu_allan_deviation"
+
+metric = "GY Angle Random Walk Coefficient"
+
+operator = "<="
+
+limit = 0.001
+
+unit = "rad/sqrt(s)"
+
+description = """
+Example only. Y-axis angle random walk coefficient shall not exceed
+0.001 rad/sqrt(s).
+"""
+
+
+[[requirements]]
+
+id = "gz_angle_random_walk"
+
+enabled = false
+
+tool_id = "imu_allan_deviation"
+
+metric = "GZ Angle Random Walk Coefficient"
+
+operator = "<="
+
+limit = 0.001
+
+unit = "rad/sqrt(s)"
+
+description = """
+Example only. Z-axis angle random walk coefficient shall not exceed
+0.001 rad/sqrt(s).
+"""
+
+
+# ================================================================
+# TEMPERATURE-STABILITY EXAMPLES
+# ================================================================
+#
+# Disabled because the appropriate temperature coefficient limit
+# is application-specific.
+# ================================================================
+
+
+[[requirements]]
+
+id = "gx_temperature_coefficient"
+
+enabled = false
+
+tool_id = "imu_temperature_stability"
+
+metric = "GX Temperature Coefficient"
+
+operator = "abs<="
+
+limit = 0.0001
+
+unit = "rad/s/degC"
+
+description = """
+Example only. Absolute GX linear temperature coefficient shall not
+exceed 0.0001 rad/s/degC.
+"""
+
+
+# ================================================================
+# AXIS-CORRELATION EXAMPLE
+# ================================================================
+#
+# Disabled because a correlation coefficient should usually be
+# treated as a diagnostic metric rather than an automatic product
+# qualification requirement.
+# ================================================================
+
+
+[[requirements]]
+
+id = "accelerometer_axis_correlation"
+
+enabled = false
+
+tool_id = "imu_axis_correlation"
+
+metric = "Accelerometer Maximum Absolute Axis Correlation"
+
+operator = "<="
+
+limit = 0.70
+
+description = """
+Example diagnostic-style requirement. Maximum absolute
+accelerometer axis correlation shall not exceed 0.70.
+"""

@@ -1,0 +1,671 @@
+# ================================================================
+# SensorQA Runtime Configuration
+# ================================================================
+#
+# This file controls:
+#
+#   - enabled analysis tools
+#   - tool execution order
+#   - tool parameters
+#   - custom plug-in behavior
+#   - pipeline behavior
+#   - configuration defaults
+#
+# Engineering PASS/FAIL limits DO NOT belong here.
+#
+# Qualification criteria belong in:
+#
+#     configs/requirements.toml
+#
+# ================================================================
+
+
+[application]
+
+name = "SensorQA"
+
+config_version = "1.0.0"
+
+# Default sensor type shown by the UI.
+#
+# This does not override metadata supplied for a dataset.
+#
+# Supported values:
+#
+#   generic
+#   accelerometer
+#   gyroscope
+#   imu
+
+default_sensor_type = "imu"
+
+
+# ================================================================
+# PIPELINE
+# ================================================================
+
+[pipeline]
+
+# If false, SensorQA refuses analysis when DatasetValidator
+# identifies a dataset as invalid.
+#
+# Advanced users may temporarily override this through the UI or
+# API when investigating problematic datasets.
+
+allow_invalid_dataset = false
+
+
+# Stop the overall workflow when an individual analysis tool
+# returns ERROR.
+#
+# The current SensorQA pipeline itself can continue executing
+# independent tools. This setting is intended for the application
+# orchestration layer.
+
+stop_on_tool_error = false
+
+
+# Continue executing independent tools when another selected tool
+# is skipped.
+#
+# Dependencies are still respected.
+
+continue_on_skipped_tool = true
+
+
+# Include disabled tools in the Tool Manager interface.
+#
+# This allows users to inspect and enable them without editing
+# Python code.
+
+show_disabled_tools = true
+
+
+# ================================================================
+# TOOL DISCOVERY
+# ================================================================
+
+[tool_discovery]
+
+# Built-in SensorQA tools.
+
+load_generic_tools = true
+load_imu_tools = true
+
+
+# Custom Python plug-ins stored in:
+#
+#     tools/custom/
+#
+# Custom plug-ins are trusted local Python code.
+# Importing them can execute code.
+
+load_custom_tools = true
+
+
+# If true, an invalid custom tool is reported but does not prevent
+# valid built-in tools from loading.
+
+continue_on_custom_tool_error = true
+
+
+# ================================================================
+# TOOL EXECUTION ORDER
+# ================================================================
+#
+# The pipeline still resolves declared tool dependencies.
+#
+# This list controls the preferred order among otherwise
+# independent tools.
+#
+# Tools that are disabled are ignored.
+# ================================================================
+
+[tool_order]
+
+preferred = [
+    "imu_sampling_integrity",
+    "imu_saturation",
+    "imu_gyro_bias",
+    "imu_accelerometer_bias",
+    "imu_stationary_noise",
+    "imu_gravity_error",
+    "imu_axis_correlation",
+    "imu_temperature_stability",
+    "imu_psd",
+    "imu_allan_deviation",
+    "imu_six_position_calibration",
+    "generic_accuracy",
+    "generic_linearity",
+    "generic_repeatability",
+    "generic_precision",
+    "generic_sensitivity",
+    "generic_drift",
+    "generic_snr",
+    "generic_psd",
+    "generic_environmental_stability",
+    "generic_outlier_detection",
+    "generic_hysteresis",
+    "generic_revision_comparison",
+]
+
+
+# ================================================================
+# IMU SAMPLING INTEGRITY
+# ================================================================
+
+[tools.imu_sampling_integrity]
+
+enabled = true
+
+large_gap_multiplier = 5.0
+
+irregular_sampling_cv_threshold = 0.05
+
+nominal_rate_warning_percent = 2.0
+
+
+# ================================================================
+# IMU SATURATION
+# ================================================================
+
+[tools.imu_saturation]
+
+enabled = true
+
+# Fraction of total configured sensor span treated as near the
+# positive or negative full-scale boundary.
+
+near_limit_margin_fraction = 0.005
+
+
+# Tight tolerance for deciding that a value effectively coincides
+# with the configured sensor boundary.
+
+exact_limit_tolerance_fraction = 0.000001
+
+
+# Consecutive exact-boundary samples needed for stronger clipping
+# evidence.
+
+minimum_clipping_run_samples = 3
+
+
+minimum_asymmetry_samples = 5
+
+asymmetry_fraction_threshold = 0.90
+
+
+# ================================================================
+# GYROSCOPE BIAS
+# ================================================================
+
+[tools.imu_gyro_bias]
+
+enabled = true
+
+minimum_samples = 100
+
+warn_relative_axis_spread = 5.0
+
+
+# ================================================================
+# ACCELEROMETER BIAS
+# ================================================================
+
+[tools.imu_accelerometer_bias]
+
+enabled = true
+
+minimum_samples = 100
+
+gravity_magnitude = 9.80665
+
+warn_gravity_error_percent = 2.0
+
+warn_relative_axis_noise_spread = 5.0
+
+
+# ================================================================
+# STATIONARY NOISE
+# ================================================================
+
+[tools.imu_stationary_noise]
+
+enabled = true
+
+minimum_samples = 500
+
+warn_relative_axis_noise_spread = 5.0
+
+warn_std_to_robust_ratio = 2.0
+
+
+# ================================================================
+# GRAVITY CONSISTENCY
+# ================================================================
+
+[tools.imu_gravity_error]
+
+enabled = true
+
+minimum_samples = 100
+
+minimum_samples_per_orientation = 50
+
+gravity_magnitude = 9.80665
+
+magnitude_warning_percent = 2.0
+
+orientation_angle_warning_deg = 5.0
+
+
+# ================================================================
+# AXIS CORRELATION
+# ================================================================
+
+[tools.imu_axis_correlation]
+
+enabled = true
+
+minimum_samples = 500
+
+correlation_warning_threshold = 0.70
+
+difference_correlation_warning_threshold = 0.70
+
+
+# ================================================================
+# TEMPERATURE STABILITY
+# ================================================================
+
+[tools.imu_temperature_stability]
+
+enabled = true
+
+minimum_samples = 500
+
+minimum_temperature_span_degc = 2.0
+
+temperature_bins = 10
+
+minimum_samples_per_bin = 20
+
+association_r2_threshold = 0.50
+
+
+# ================================================================
+# POWER SPECTRAL DENSITY
+# ================================================================
+
+[tools.imu_psd]
+
+enabled = true
+
+segment_length = 2048
+
+overlap_fraction = 0.50
+
+window = "hann"
+
+minimum_frequency_hz = 0.1
+
+peak_prominence_ratio = 10.0
+
+max_reported_peaks = 5
+
+max_sampling_cv = 0.02
+
+allow_irregular_sampling = false
+
+
+# ================================================================
+# ALLAN DEVIATION
+# ================================================================
+
+[tools.imu_allan_deviation]
+
+enabled = true
+
+minimum_samples = 2000
+
+minimum_duration_seconds = 30.0
+
+tau_points = 40
+
+minimum_allan_pairs = 20
+
+max_sampling_cv = 0.02
+
+allow_irregular_sampling = false
+
+slope_tolerance = 0.15
+
+bias_instability_min_duration_seconds = 300.0
+
+
+# ================================================================
+# SIX-POSITION ACCELEROMETER CALIBRATION
+# ================================================================
+#
+# This tool automatically skips unless all six canonical
+# orientations are available:
+#
+#     +X
+#     -X
+#     +Y
+#     -Y
+#     +Z
+#     -Z
+#
+# Leaving it enabled therefore does not mean every dataset must
+# contain a six-position calibration test.
+# ================================================================
+
+[tools.imu_six_position_calibration]
+
+enabled = true
+
+minimum_samples_per_orientation = 50
+
+gravity_magnitude = 9.80665
+
+minimum_primary_axis_span_fraction = 0.50
+
+
+# ================================================================
+# GENERIC SENSOR ACCURACY
+# ================================================================
+#
+# This tool is useful for generic reference-based datasets.
+#
+# This tool is globally available for generic sensor datasets.
+# SensorQA filters globally enabled tools by the current dataset's
+# SensorType before pipeline execution, so it is skipped for IMU
+# datasets rather than causing an incompatibility error.
+# ================================================================
+
+[tools.generic_accuracy]
+
+enabled = true
+
+
+# ================================================================
+# GENERIC SENSOR LINEARITY
+# ================================================================
+#
+# Fits the best-fit straight-line relationship between reference
+# and measured values and reports residual linearity error.
+#
+# PASS/FAIL limits remain in requirements.toml rather than here.
+# ================================================================
+
+[tools.generic_linearity]
+
+enabled = true
+
+minimum_samples = 5
+
+minimum_unique_reference_values = 3
+
+
+# ================================================================
+# GENERIC SENSOR REPEATABILITY
+# ================================================================
+#
+# Quantifies within-condition variation at repeated reference levels.
+# Reference values may optionally be grouped using an absolute
+# tolerance when nominally identical test conditions differ slightly
+# numerically.
+#
+# PASS/FAIL limits remain in requirements.toml rather than here.
+# ================================================================
+
+[tools.generic_repeatability]
+
+enabled = true
+
+minimum_samples = 6
+
+minimum_repeats_per_level = 3
+
+minimum_repeat_levels = 2
+
+reference_group_tolerance = 0.0
+
+
+# ================================================================
+# CUSTOM TOOL DEFAULTS
+# ================================================================
+
+[custom_tools]
+
+# Custom plug-ins are discovered from tools/custom/.
+#
+# A Python file being present makes the tool AVAILABLE.
+#
+# It is not necessarily ENABLED.
+#
+# Individual custom tool configuration can be added below using:
+#
+#     [tools.my_custom_tool]
+#     enabled = true
+#     parameter_name = value
+#
+# The key must match the tool's declared tool_id.
+
+default_enabled = false
+
+
+# Whether custom tools that are not explicitly mentioned under
+# [tools.*] should automatically execute.
+#
+# Keeping this false is safer and more predictable.
+
+enable_unconfigured_custom_tools = false
+
+
+# ================================================================
+# REPORTING
+# ================================================================
+
+[reporting]
+
+include_warnings = true
+
+include_messages = true
+
+include_evidence = true
+
+include_tool_metadata = true
+
+include_configuration_snapshot = true
+
+include_disabled_requirements = false
+
+
+# Raw numerical curves can be large.
+#
+# Examples:
+#
+#   PSD frequency arrays
+#   Allan deviation curves
+#
+# The application can include them in machine-readable exports
+# while keeping the human-facing report concise.
+
+include_raw_curve_data_in_json = true
+
+include_raw_curve_data_in_human_report = false
+
+
+# ================================================================
+# OUTPUT
+# ================================================================
+
+[output]
+
+default_directory = "reports"
+
+save_json_results = true
+
+save_csv_metrics = true
+
+save_plots = true
+
+save_human_report = true
+
+
+# Existing files should not silently be replaced.
+
+overwrite_existing = false
+
+
+# ================================================================
+# LOGGING
+# ================================================================
+
+[logging]
+
+level = "INFO"
+
+log_to_console = true
+
+log_to_file = true
+
+log_directory = "logs"
+
+
+# ================================================================
+# ADVANCED SAFETY / REPRODUCIBILITY
+# ================================================================
+
+[advanced]
+
+# Preserve the raw input dataset.
+#
+# SensorQA analysis should operate on normalized copies and should
+# never overwrite the user's original input file.
+
+preserve_original_data = true
+
+
+# Record tool versions, tool parameters, configuration values, and
+# processing history in exported results.
+
+record_reproducibility_metadata = true
+
+
+# SensorQA should not silently interpolate or uniformly resample
+# sensor data unless a future tool explicitly declares that
+# transformation and records it in processing history.
+
+allow_implicit_resampling = false
+
+
+# Custom Python tools are trusted executable code.
+#
+# The future UI should display a warning before enabling a newly
+# discovered custom plug-in.
+
+warn_before_enabling_new_custom_tool = true
+
+# ================================================================
+# GENERIC SENSOR PRECISION
+# ================================================================
+
+[tools.generic_precision]
+
+enabled = true
+minimum_samples = 5
+
+
+# ================================================================
+# GENERIC SENSOR SENSITIVITY
+# ================================================================
+
+[tools.generic_sensitivity]
+
+enabled = true
+minimum_samples = 5
+minimum_reference_levels = 3
+reference_group_tolerance = 0.0
+
+
+# ================================================================
+# GENERIC SENSOR DRIFT
+# ================================================================
+
+[tools.generic_drift]
+
+enabled = true
+minimum_samples = 10
+minimum_duration_s = 1.0
+
+
+# ================================================================
+# GENERIC SENSOR SIGNAL-TO-NOISE RATIO
+# ================================================================
+
+[tools.generic_snr]
+
+enabled = true
+minimum_samples = 10
+
+
+# ================================================================
+# GENERIC SENSOR ERROR PSD
+# ================================================================
+
+[tools.generic_psd]
+
+enabled = true
+segment_length = 1024
+overlap_fraction = 0.5
+minimum_frequency_hz = 0.0
+max_sampling_cv = 0.02
+
+
+# ================================================================
+# GENERIC SENSOR ENVIRONMENTAL STABILITY
+# ================================================================
+
+[tools.generic_environmental_stability]
+
+enabled = true
+minimum_samples = 10
+minimum_span = 0.0
+association_r2_threshold = 0.5
+
+
+# ================================================================
+# GENERIC SENSOR OUTLIER DETECTION
+# ================================================================
+
+[tools.generic_outlier_detection]
+
+enabled = true
+minimum_samples = 10
+modified_z_threshold = 3.5
+
+
+# ================================================================
+# GENERIC SENSOR HYSTERESIS
+# ================================================================
+
+[tools.generic_hysteresis]
+
+enabled = true
+minimum_overlap_levels = 3
+reference_match_tolerance = 0.0
+
+
+# ================================================================
+# GENERIC SENSOR REVISION COMPARISON
+# ================================================================
+
+[tools.generic_revision_comparison]
+
+enabled = true
+minimum_samples_per_revision = 5
+
