@@ -5,7 +5,7 @@ SensorQA is a desktop application for sensor characterization, calibration, diag
 The current release supports generic reference-based sensors and IMU data. Analysis tools are plug-in based, so new checks can be added without changing the application core.
 
 <p align="center">
-  <img src="sensorqa_graphical_abstract.svg" alt="SensorQA workflow" width="100%">
+  <img src="graphical_abstract.svg" alt="SensorQA workflow" width="100%">
 </p>
 
 ## What you can do with SensorQA
