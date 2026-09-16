@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="620" viewBox="0 0 1400 620" role="img" aria-labelledby="title desc">
+  <title id="title">SensorQA graphical abstract</title>
+  <desc id="desc">Sensor data flows through mapping, analysis, calibration and qualification, then into a report.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="100%" stop-color="#0d1627"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#18304a" stroke-width="1" opacity="0.24"/>
+    </pattern>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1400" height="620" rx="28" fill="url(#bg)"/>
+  <rect width="1400" height="620" rx="28" fill="url(#grid)"/>
+
+  <text x="72" y="86" fill="#f4f7fb" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700">SensorQA</text>
+  <text x="72" y="120" fill="#8ca0b8" font-family="Inter, Arial, sans-serif" font-size="18">Sensor characterization and qualification</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(70 205)">
+      <rect width="190" height="190" rx="24" fill="#0d1a2c" stroke="#23435d" stroke-width="2"/>
+      <circle cx="95" cy="68" r="34" fill="#0a2531" stroke="#22d3ee" stroke-width="2" filter="url(#glow)"/>
+      <path d="M72 68 C82 42, 91 94, 102 62 C111 38, 121 95, 132 66" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round"/>
+      <text x="95" y="132" text-anchor="middle" fill="#f4f7fb" font-size="22" font-weight="650">Sensor data</text>
+      <text x="95" y="160" text-anchor="middle" fill="#8ca0b8" font-size="15">Generic or IMU</text>
+    </g>
+
+    <g transform="translate(330 205)">
+      <rect width="190" height="190" rx="24" fill="#0d1a2c" stroke="#23435d" stroke-width="2"/>
+      <g transform="translate(52 39)" fill="none" stroke="#22d3ee" stroke-width="3">
+        <rect x="0" y="0" width="86" height="70" rx="10"/>
+        <path d="M18 20 H68 M18 35 H58 M18 50 H72"/>
+        <circle cx="74" cy="20" r="5" fill="#818cf8" stroke="none"/>
+      </g>
+      <text x="95" y="132" text-anchor="middle" fill="#f4f7fb" font-size="22" font-weight="650">Map + units</text>
+      <text x="95" y="160" text-anchor="middle" fill="#8ca0b8" font-size="15">Clean input</text>
+    </g>
+
+    <g transform="translate(590 175)">
+      <rect width="220" height="250" rx="28" fill="#102238" stroke="url(#accent)" stroke-width="3" filter="url(#glow)"/>
+      <circle cx="110" cy="72" r="42" fill="#0b2b39" stroke="#22d3ee" stroke-width="2"/>
+      <path d="M83 79 L100 62 L114 76 L140 49" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="83" cy="79" r="5" fill="#818cf8"/>
+      <circle cx="100" cy="62" r="5" fill="#818cf8"/>
+      <circle cx="114" cy="76" r="5" fill="#818cf8"/>
+      <circle cx="140" cy="49" r="5" fill="#818cf8"/>
+      <text x="110" y="147" text-anchor="middle" fill="#f4f7fb" font-size="26" font-weight="700">Analyze</text>
+      <text x="110" y="179" text-anchor="middle" fill="#9fb3c8" font-size="15">Accuracy  Drift  PSD</text>
+      <text x="110" y="204" text-anchor="middle" fill="#9fb3c8" font-size="15">Noise  Bias  Stability</text>
+    </g>
+
+    <g transform="translate(880 205)">
+      <rect width="190" height="190" rx="24" fill="#0d1a2c" stroke="#23435d" stroke-width="2"/>
+      <path d="M52 93 C69 70, 82 115, 99 89 C114 66, 126 84, 140 56" fill="none" stroke="#818cf8" stroke-width="5" stroke-linecap="round"/>
+      <path d="M52 106 C72 88, 88 102, 103 81 C118 61, 130 69, 142 48" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+      <text x="95" y="132" text-anchor="middle" fill="#f4f7fb" font-size="22" font-weight="650">Calibrate</text>
+      <text x="95" y="160" text-anchor="middle" fill="#8ca0b8" font-size="15">Held-out check</text>
+    </g>
+
+    <g transform="translate(1140 205)">
+      <rect width="190" height="190" rx="24" fill="#0d1a2c" stroke="#23435d" stroke-width="2"/>
+      <circle cx="95" cy="66" r="34" fill="#102b27" stroke="#34d399" stroke-width="2"/>
+      <path d="M78 67 L90 79 L113 52" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="95" y="132" text-anchor="middle" fill="#f4f7fb" font-size="22" font-weight="650">Qualify</text>
+      <text x="95" y="160" text-anchor="middle" fill="#8ca0b8" font-size="15">Report + evidence</text>
+    </g>
+  </g>
+
+  <g stroke="#22d3ee" stroke-width="3" fill="none" marker-end="url(#arrow)" opacity="0.9">
+    <path d="M270 300 H316"/>
+    <path d="M530 300 H575"/>
+    <path d="M820 300 H866"/>
+    <path d="M1080 300 H1126"/>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif" font-size="15" fill="#7288a3">
+    <text x="70" y="520">CSV in</text>
+    <text x="330" y="520">Standard fields</text>
+    <text x="590" y="520">Plug-in tools</text>
+    <text x="880" y="520">Train / validation</text>
+    <text x="1140" y="520">HTML + JSON</text>
+  </g>
+  <line x1="70" y1="550" x2="1330" y2="550" stroke="#1a3650" stroke-width="1"/>
+  <text x="70" y="582" fill="#637991" font-family="Inter, Arial, sans-serif" font-size="14">No pass/fail logic inside analysis tools. Requirements stay separate.</text>
+</svg>
